@@ -37,9 +37,9 @@ projection = 'Geographic'
 #A9. Tamaño de la pagina --> [str]
 page_size = '100'
 
-###########################################################################################################
-### B.CONFIGURACION DEL REQUEST - VALORES PREDEFINIDOS (NO MODIFICAR POR PARTE DEL USUARIO DEL PRODUCTO ###
-###########################################################################################################
+############################################################################################################
+### B.CONFIGURACION DEL REQUEST - VALORES PREDEFINIDOS (NO MODIFICAR POR PARTE DEL USUARIO DEL PRODUCTO) ###
+############################################################################################################
 
 #B1. Modo del Request --> [str]
 request_mode = 'stream'
