@@ -5,7 +5,7 @@
 # A1. FECHAS --> [str]
 start_date = '2023-01-01' #Fecha de inicio en formato 'yyyy-MM-dd' (str)
 start_time = '00:00:00' #Hora de inicio en formato 'HH:mm:ss' (str)
-end_date = '2023-03-31' #Fecha de fin en formato 'yyyy-MM-dd' (str)
+end_date = '2023-01-02' #Fecha de fin en formato 'yyyy-MM-dd' (str)
 end_time = '00:00:00' #Hora de fin en formato 'HH:mm:ss' (str)
 
 #A2. ZONA GEOGRAFICA --> [str]
