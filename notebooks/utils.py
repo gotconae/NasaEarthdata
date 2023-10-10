@@ -341,7 +341,7 @@ def create_logs_file(name_file_logs:str):
             return status_code,status_message,f
         else:
             status_code = 'NOK'
-            status_message = ''
+            status_message = 'create_logs_file() --> Error: No fue posible crear el archivo .txt para almacenar los logs'
             f = None
             return status_code,status_message,f
         
@@ -372,7 +372,35 @@ def write_log_message(f,texto:str):
         f.write(f'{texto}\n')
         
     except Exception as e:
-        f.write(f'write_logs_file() --> Exception: {e}')
+        f.write(f'write_log_message() --> Exception: {e}')
+
+def write_error_log_message(f):
+    '''
+    Se escribe un mensaje (log) por error en tiempo de ejecucion en el archivo de .txt de logs
+    
+    ----------------------
+    Parametros de Entrada:
+    ----------------------
+        - f(TextIOWrapper): Objeto que referencia al .txt para escribir logs
+        - texto(str): Texto que se desea escribir
+
+    ---------------------
+    Parametros de Salida:
+    ---------------------
+        - N/A
+
+    '''
+    try:
+        message = f'#ATENCION!: SE DA POR FINALIZADO EL PROCESO POR ERROR EN TIEMPO DE EJECUCION'
+        f.write('\n')
+        f.write(f'{message}\n')
+        f.close()
+        
+    except Exception as e:
+        f.write(f'write_error_log_message() --> Exception: {e}')
+        f.write('\n')
+        f.write(f'{message}\n')
+        f.close()
         
 def unzip(folder_name:str) -> tuple[str,str,Optional[str]]:
     '''

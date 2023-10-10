@@ -3,9 +3,9 @@
 ##############################################################################
 
 # A1. FECHAS --> [str]
-start_date = '2023-09-01' #Fecha de inicio en formato 'yyyy-MM-dd' (str)
+start_date = '2023-01-01' #Fecha de inicio en formato 'yyyy-MM-dd' (str)
 start_time = '00:00:00' #Hora de inicio en formato 'HH:mm:ss' (str)
-end_date = '2023-09-02' #Fecha de fin en formato 'yyyy-MM-dd' (str)
+end_date = '2023-03-31' #Fecha de fin en formato 'yyyy-MM-dd' (str)
 end_time = '00:00:00' #Hora de fin en formato 'HH:mm:ss' (str)
 
 #A2. ZONA GEOGRAFICA --> [str]
@@ -58,3 +58,11 @@ http_status_list = [429,500,501,502,503,504]
 #C1. Nombre de FOLDERS a contruir para la ejecucion --> [list] + [str]:
     #Directorios OBLIGATORIOS: ['TMP','SMAP']
 folder_name_list = ['TMP','OUTPUT']
+
+
+###############
+### D.OTROS ###
+###############
+
+#D1. Nombre del script donde se cargan los parametros a utilizar durante la ejecucion
+script_parameters_name = 'parameters.py'
