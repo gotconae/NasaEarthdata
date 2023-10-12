@@ -11,7 +11,10 @@ from typing import Union,Optional
 import shutil
 import zipfile
 from datetime import date
-from parameters import *
+import sys
+sys.path.append('../') #Esto permite acceder a modulos creados el mismo nivel de directorio que el actual
+
+from config.parameters import *
 
 def load_secrets() -> tuple[Optional[str],Optional[str],Optional[str]]:
     '''

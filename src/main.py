@@ -1,4 +1,4 @@
-from download_nasaearthdata import download_nasaearthdata
+from download.download_nasaearthdata import download_images
 
 if __name__ == "__main__":
-    download_nasaearthdata()
+    download_images()

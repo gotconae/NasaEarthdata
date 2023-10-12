@@ -1,28 +1,28 @@
-#Import packages
-
 import time
 from datetime import datetime
 import inspect
+import sys
+sys.path.append('../') #Esto permite acceder a modulos creados el mismo nivel de directorio que el actual
 
-from utils import load_secrets
-from utils import temporal_range
-from utils import request_urls_list
-from utils import create_root_folder
-from utils import create_folder
-from utils import delete_folder
-from utils import dict_folders
-from utils import create_logs_file
-from utils import write_log_message
-from utils import write_error_log_message
-from utils import unzip
-from utils import move_images
-from utils import execute_request
-from utils import check_execution_result
+from utils.modules import load_secrets
+from utils.modules import temporal_range
+from utils.modules import request_urls_list
+from utils.modules import create_root_folder
+from utils.modules import create_folder
+from utils.modules import delete_folder
+from utils.modules import dict_folders
+from utils.modules import create_logs_file
+from utils.modules import write_log_message
+from utils.modules import write_error_log_message
+from utils.modules import unzip
+from utils.modules import move_images
+from utils.modules import execute_request
+from utils.modules import check_execution_result
+from config.parameters import *
+import config.parameters
 
-import parameters
-from parameters import *
 
-def download_nasaearthdata():
+def download_images():
     
     ##############################
     ### CONDIDCIONES INICIALES ###
@@ -60,8 +60,8 @@ def download_nasaearthdata():
         write_log_message(log,'#'*len(message))
     
         #log - Se construye el mensaje con el conjunto de parametros a utilizar para la ejecucion en curso y se realiza la escritura.
-        list_parameters = [v for v in dir(parameters) if v[:2] != "__"]
-        parameters_values = dict(inspect.getmembers(parameters))
+        list_parameters = [v for v in dir(config.parameters) if v[:2] != "__"]
+        parameters_values = dict(inspect.getmembers(config.parameters))
         message = f'LOS PARAMETROS QUE SE CARGARON EN EL SCRIPT [{script_parameters_name}] Y SERAN UTILIZADOS PARA LA EJECUCION EN CURSO SON:'
         write_log_message(log,'#'*150)
         write_log_message(log,message)
