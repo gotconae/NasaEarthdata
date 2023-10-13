@@ -317,13 +317,14 @@ def move_files(source:str,destination:str,pattern:str = '*') -> tuple[str,str,Op
         status_message = f'move_files() --> Excepcion: {e}'
         return status_code,status_message,None
 
-def create_logs_file(name_file_logs:str):
+def create_logs_file(path:str,name_file_logs:str):
     '''
     Se crea el archivo de .txt para almacenar logs de la ejecucion del proceso.
     
     ----------------------
     Parametros de Entrada:
     ----------------------
+        - path(str): Directorio donde se debe crear el archivo.
         - name_file_logs(str).
 
     ---------------------
@@ -334,7 +335,7 @@ def create_logs_file(name_file_logs:str):
         - f(TextIOWrapper): Objeto que referencia al .txt para escribir logs.
     '''
     try:
-        file_logs = str(os.path.join(os.getcwd(),name_file_logs))
+        file_logs = str(os.path.join(path,name_file_logs))
         f = open(file_logs, 'w')
         f.truncate(0)   
         

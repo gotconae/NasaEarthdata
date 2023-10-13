@@ -57,7 +57,7 @@ http_status_list = [429,500,501,502,503,504]
 
 #C1. Nombre de FOLDERS a contruir para la ejecucion --> [list] + [str]:
     #Directorios OBLIGATORIOS: ['TMP','SMAP']
-folder_name_list = ['TMP','OUTPUT']
+folder_name_list = ['TMP','OUTPUT','LOGS']
 
 
 ###############
