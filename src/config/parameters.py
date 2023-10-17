@@ -2,13 +2,13 @@
 ### A.VARIABLES DEL REQUEST - COMPLETAR POR PARTE DEL USUARIO DEL PRODUCTO ###
 ##############################################################################
 
-# A1. FECHAS --> [str]
-start_date = '2023-01-01' #Fecha de inicio en formato 'yyyy-MM-dd' (str)
+# A1. Fechas --> [str]
+start_date = '2023-01-01' #Fecha de inicio en formato 'YYYY-MM-DD' (str)
 start_time = '00:00:00' #Hora de inicio en formato 'HH:mm:ss' (str)
-end_date = '2023-01-02' #Fecha de fin en formato 'yyyy-MM-dd' (str)
+end_date = '2023-01-02' #Fecha de fin en formato 'YYYY-MM-DD' (str)
 end_time = '00:00:00' #Hora de fin en formato 'HH:mm:ss' (str)
 
-# A2. ZONA GEOGRAFICA --> [str]
+# A2. Zona Geografica --> [str]
 lower_left_longitude = '-90'
 lower_left_latitude = '-60'
 upper_right_longitude = '-30'
@@ -18,23 +18,23 @@ bbox = lower_left_longitude + ',' + lower_left_latitude + ',' + upper_right_long
 # A3. URL Base - National Snow & Ice Data Center (NSIDC) --> [str]
 base_url = 'https://n5eil02u.ecs.nsidc.org/egi/request'
 
-# A4. Nombre del servicio --> [str]
+# A4. Nombre del Producto --> [str]
 short_name = 'SPL3SMP_E'
 
-# A5. Version del servicio --> [str]
+# A5. Version del Producto --> [str]
 version = '005'
 
 # A6. Formato de salida de las imagenes --> [str]
 formato = 'GeoTIFF'
 
-# A7. Productos a considerar --> [list] + [str]
+# A7. Variable / Capa --> [list] + [str]
 coverages = ['/Soil_Moisture_Retrieval_Data_AM/soil_moisture',
              '/Soil_Moisture_Retrieval_Data_PM/soil_moisture_pm']
 
 # A8. Proyeccion --> [str]
 projection = 'Geographic' 
 
-# A9. Tamaño de la pagina --> [str]
+# A9. Cantidad de items a devolver en una respuesta --> [str]
 page_size = '100'
 
 ############################################################################################################
