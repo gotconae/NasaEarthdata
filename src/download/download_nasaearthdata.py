@@ -35,16 +35,16 @@ def download_images():
 
         #Request - Diccionario con parametros.
         param_dict = {'short_name': short_name, 
-                    'version': version,
-                    'format': formato,
-                    'time': '',
-                    'Coverage': '',
-                    'projection': projection,
-                    'bbox': bbox,
-                    'email': '',
-                    'page_size': page_size,
-                    'request_mode': request_mode
-                    }
+                      'version': version,
+                      'format': formato,
+                      'time': '',
+                      'Coverage': '',
+                      'projection': projection,
+                      'bbox': bbox,
+                      'email': '',
+                      'page_size': page_size,
+                      'request_mode': request_mode
+                     }
         
         ###################################################################################################
         ### ETAPA N°0-1: Se crean los directorios necesarios para la ejecucion --> create_root_folder() ###
