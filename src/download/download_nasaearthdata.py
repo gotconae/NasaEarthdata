@@ -23,7 +23,21 @@ import config.parameters
 
 
 def download_images():
+    '''
+    Se realiza la descarga de imagenes correspondientes a National Snow and Ice Data Center Distributed Active Archive Center (NSIDC DAAC)
+    
+    ----------------------
+    Parametros de Entrada:
+    ----------------------
+        - N/A
 
+    ---------------------
+    Parametros de Salida:
+    ---------------------
+        - status_code_check_execution(str): Codigo de estado ['OK','NOK'].
+        - status_message_check_execution(str): Mensaje de estado.
+        - destination_folder(str): Directorio donde se alojan las imagenes descargadas.
+    '''
     try:
 
         ##############################
