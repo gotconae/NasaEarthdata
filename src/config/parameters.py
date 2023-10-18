@@ -66,3 +66,6 @@ folder_name_list = ['TMP','OUTPUT','LOGS']
 
 # D1. Nombre del script donde se cargan los parametros a utilizar durante la ejecucion
 script_parameters_name = 'parameters.py'
+
+# D2. Flag para habilitar / deshabilitar la creacion y escritura de logs --> [bool]
+write_logs_flag = True

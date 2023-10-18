@@ -317,7 +317,7 @@ def move_files(source:str,destination:str,pattern:str = '*') -> tuple[str,str,Op
         status_message = f'move_files() --> Excepcion: {e}'
         return status_code,status_message,None
 
-def create_logs_file(path:str,name_file_logs:str):
+def create_logs_file(path:str,name_file_logs:str,write_logs_flag:bool):
     '''
     Se crea el archivo de .txt para almacenar logs de la ejecucion del proceso.
     
@@ -326,6 +326,7 @@ def create_logs_file(path:str,name_file_logs:str):
     ----------------------
         - path(str): Directorio donde se debe crear el archivo.
         - name_file_logs(str).
+        - write_logs_flag(bool): Flag para considerar si es necesario o no la creacion del archivo.
 
     ---------------------
     Parametros de Salida:
@@ -334,28 +335,35 @@ def create_logs_file(path:str,name_file_logs:str):
         - status_message(str): Mensaje de estado.
         - f(TextIOWrapper): Objeto que referencia al .txt para escribir logs.
     '''
-    try:
-        file_logs = str(os.path.join(path,name_file_logs))
-        f = open(file_logs, 'w')
-        f.truncate(0)   
-        
-        if os.path.exists(file_logs):
-            status_code = 'OK'
-            status_message = ''
-            return status_code,status_message,f
-        else:
+    if write_logs_flag == True:
+        try: 
+            file_logs = str(os.path.join(path,name_file_logs))
+            f = open(file_logs, 'w')
+            f.truncate(0)   
+            
+            if os.path.exists(file_logs):
+                status_code = 'OK'
+                status_message = ''
+                return status_code,status_message,f
+            else:
+                status_code = 'NOK'
+                status_message = 'create_logs_file() --> Error: No fue posible crear el archivo .txt para almacenar los logs'
+                f = None
+                return status_code,status_message,f
+            
+        except Exception as e:
             status_code = 'NOK'
-            status_message = 'create_logs_file() --> Error: No fue posible crear el archivo .txt para almacenar los logs'
+            status_message = f'create_logs_file() --> Exception: {e}'
             f = None
             return status_code,status_message,f
         
-    except Exception as e:
-        status_code = 'NOK'
-        status_message = f'create_logs_file() --> Exception: {e}'
+    else:
+        status_code = 'OK'
+        status_message = ''
         f = None
         return status_code,status_message,f
     
-def write_log_message(f,texto:str):
+def write_log_message(f,texto:str,write_logs_flag:bool):
     '''
     Se escribe un mensaje (log) en el archivo de .txt de logs
     
@@ -364,6 +372,7 @@ def write_log_message(f,texto:str):
     ----------------------
         - f(TextIOWrapper): Objeto que referencia al .txt para escribir logs
         - texto(str): Texto que se desea escribir
+        - write_logs_flag(bool): Flag para considerar si es necesario o no la escritura del mensaje en el log.
 
     ---------------------
     Parametros de Salida:
@@ -371,14 +380,18 @@ def write_log_message(f,texto:str):
         - N/A
 
     '''
-    try:
-        f.write('\n')
-        f.write(f'{texto}\n')
-        
-    except Exception as e:
-        f.write(f'write_log_message() --> Exception: {e}')
+    if write_logs_flag == True:
+        try:
+            f.write('\n')
+            f.write(f'{texto}\n')
+            
+        except Exception as e:
+            f.write(f'write_log_message() --> Exception: {e}')
 
-def write_error_log_message(f):
+    else:
+        pass
+
+def write_error_log_message(f,write_logs_flag:bool):
     '''
     Se escribe un mensaje (log) por error en tiempo de ejecucion en el archivo de .txt de logs
     
@@ -387,6 +400,7 @@ def write_error_log_message(f):
     ----------------------
         - f(TextIOWrapper): Objeto que referencia al .txt para escribir logs
         - texto(str): Texto que se desea escribir
+        - write_logs_flag(bool): Flag para considerar si es necesario o no la escritura del mensaje en el log.
 
     ---------------------
     Parametros de Salida:
@@ -394,17 +408,21 @@ def write_error_log_message(f):
         - N/A
 
     '''
-    try:
-        message = f'#ATENCION!: SE DA POR FINALIZADO EL PROCESO POR ERROR EN TIEMPO DE EJECUCION'
-        f.write('\n')
-        f.write(f'{message}\n')
-        f.close()
-        
-    except Exception as e:
-        f.write(f'write_error_log_message() --> Exception: {e}')
-        f.write('\n')
-        f.write(f'{message}\n')
-        f.close()
+    if write_logs_flag == True:
+        try:
+            message = f'#ATENCION!: SE DA POR FINALIZADO EL PROCESO POR ERROR EN TIEMPO DE EJECUCION'
+            f.write('\n')
+            f.write(f'{message}\n')
+            f.close()
+            
+        except Exception as e:
+            f.write(f'write_error_log_message() --> Exception: {e}')
+            f.write('\n')
+            f.write(f'{message}\n')
+            f.close()
+    
+    else:
+        pass
         
 def unzip(folder_name:str) -> tuple[str,str,Optional[str]]:
     '''

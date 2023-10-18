@@ -77,7 +77,7 @@ def download_images():
                 datetime_execution = datetime.today().isoformat('T','seconds')
                 time_now = datetime_execution.replace(':','-')
                 name_file_log = f'log_ejecucion_{time_now}_{short_name}_{version}_{start_date}_{end_date}.txt'
-                status_code_log_file,status_message_log_file,log = create_logs_file(dict_folder_list['path_LOGS'],name_file_log)
+                status_code_log_file,status_message_log_file,log = create_logs_file(dict_folder_list['path_LOGS'],name_file_log,write_logs_flag)
 
                 #log - Mensaje por consola.
                 message = f'ETAPA 0-3 --> {status_code_log_file}'
@@ -86,21 +86,21 @@ def download_images():
                 if status_code_log_file == 'OK':
                     #log - Se contruye el mensaje inicial y se realiza la escritura en el archivo.
                     message = f'ATENCION! --> SE INICIA LA EJECUCION DEL PROCESO [{short_name}] CON FECHA: [{datetime_execution}]'
-                    write_log_message(log,'#'*len(message))
-                    write_log_message(log,message)
-                    write_log_message(log,'#'*len(message))
+                    write_log_message(log,'#'*len(message),write_logs_flag)
+                    write_log_message(log,message,write_logs_flag)
+                    write_log_message(log,'#'*len(message),write_logs_flag)
                 
                     #log - Se construye el mensaje con el conjunto de parametros a utilizar para la ejecucion en curso y se realiza la escritura en el archivo.
                     list_parameters = [v for v in dir(config.parameters) if v[:2] != "__"]
                     parameters_values = dict(inspect.getmembers(config.parameters))
                     message = f'LOS PARAMETROS QUE SE CARGARON EN EL SCRIPT [{script_parameters_name}] Y SERAN UTILIZADOS PARA LA EJECUCION EN CURSO SON:'
-                    write_log_message(log,'#'*150)
-                    write_log_message(log,message)
+                    write_log_message(log,'#'*150,write_logs_flag)
+                    write_log_message(log,message,write_logs_flag)
                     for parameter in list_parameters:
                         valor = parameters_values[parameter]
                         message = f'\t{parameter} = {valor}'
-                        write_log_message(log,message)
-                    write_log_message(log,'#'*150)
+                        write_log_message(log,message,write_logs_flag)
+                    write_log_message(log,'#'*150,write_logs_flag)
 
                     ##########################################################################################################################
                     ### ETAPA N°1: Se cargan los secretos para realizar la conexion al microservicio (API) de EARTHDATA --> load_secrets() ###
@@ -116,12 +116,12 @@ def download_images():
                         status_message_load_secrets = ''
 
                         #log - Mensaje por consola.
-                        message = f'ETAPA 1 --> {status_code_load_secrets}'
+                        message = f'ETAPA 1 ----> {status_code_load_secrets}'
                         print(message)
 
                         #log - Se contruye el mensaje y se realiza la escritura en el archivo.
                         message = f'#ETAPA 1: Se cargan los secretos para realizar la conexion al microservicio (API) de EARTHDATA --> load_secrets() --> Estado:[{status_code_load_secrets}] --> Mensaje:[{status_message_load_secrets}] --> {round(time.time() - execution_time_start,4)} seg'
-                        write_log_message(log,message)
+                        write_log_message(log,message,write_logs_flag)
 
                         #################################################################################################
                         ### ETAPA N°2: Se construye la ventana temporal a utilizar en el request --> temporal_range() ###
@@ -130,12 +130,12 @@ def download_images():
                         status_code_time,status_message_time,time_range = temporal_range(start_date,start_time,end_date,end_time)
 
                         #log - Mensaje por consola.
-                        message = f'ETAPA 2 --> {status_code_time}'
+                        message = f'ETAPA 2 ----> {status_code_time}'
                         print(message)
 
                         #log - Se contruye el mensaje y se realiza la escritura en el archivo.
                         message = f'#ETAPA 2: Se construye la ventana temporal [{time_range}] a utilizar en el request --> temporal_range() --> Estado:[{status_code_time}] --> Mensaje:[{status_message_time}] --> {round(time.time() - execution_time_start,4)} seg'
-                        write_log_message(log,message)
+                        write_log_message(log,message,write_logs_flag)
 
                         if status_code_time == 'OK':
                             #Se incorpora el valor de la variable 'time' al diccionario de parametros.
@@ -148,12 +148,12 @@ def download_images():
                             status_code_request_list,status_message_request_list,request_list = request_urls_list(param_dict,coverages)
 
                             #log - Mensaje por consola.
-                            message = f'ETAPA 3 --> {status_code_request_list}'
+                            message = f'ETAPA 3 ----> {status_code_request_list}'
                             print(message)
 
                             #log - Se contruye el mensaje y se realiza la escritura en el archivo.
                             message = f'#ETAPA 3: Se obtiene el listado de URLs (cantidad = {len(request_list)}) a utilizar en el request --> request_urls_list() --> Estado:[{status_code_request_list}] --> Mensaje:[{status_message_request_list}] --> {round(time.time() - execution_time_start,4)} seg'
-                            write_log_message(log,message)
+                            write_log_message(log,message,write_logs_flag)
 
                             if status_code_request_list == 'OK':
 
@@ -166,12 +166,12 @@ def download_images():
                                 status_code_create_folder,status_message_create_folder,destination_folder = create_folder(origin_folder,name_folder)
 
                                 #log - Mensaje por consola.
-                                message = f'ETAPA 4 --> {status_code_create_folder}'
+                                message = f'ETAPA 4 ----> {status_code_create_folder}'
                                 print(message)
 
                                 #log - Se contruye el mensaje y se realiza la escritura en el archivo.
                                 message = f'#ETAPA 4: Se crea el directorio [{name_folder}] dentro del directorio [{origin_folder}] donde se almacena la salida del proceso --> create_folder() --> Estado:[{status_code_create_folder}] --> Mensaje:[{status_message_create_folder}] --> {round(time.time() - execution_time_start,4)} seg'
-                                write_log_message(log,message)
+                                write_log_message(log,message,write_logs_flag)
 
                                 if status_code_create_folder == 'OK':
 
@@ -195,7 +195,7 @@ def download_images():
 
                                         #log - Se contruye el mensaje y se realiza la escritura en el archivo.
                                         message = f'#ETAPA 5-{indice_url+1}: Se realiza el request a [{url}] y el resultado se guarda en [{destination_path}] --> execute_request() --> Estado:[{status_code_execute_request}] --> Mensaje:[{status_message_execute_request}] --> {round(time.time() - execution_time_start,4)} seg'
-                                        write_log_message(log,message)
+                                        write_log_message(log,message,write_logs_flag)
 
                                     list_unique_values = list(set(status_code_execute_request_list))
                                     if (len(list_unique_values) == 1) and (list_unique_values[0] == 'OK'):
@@ -207,12 +207,12 @@ def download_images():
                                         status_code_unzip,status_message_unzip,_ = unzip(dict_folder_list['path_TMP'])
 
                                         #log - Mensaje por consola.
-                                        message = f'ETAPA 6 --> {status_code_unzip}'
+                                        message = f'ETAPA 6 ----> {status_code_unzip}'
                                         print(message)
 
                                         #log - Se contruye el mensaje y se realiza la escritura en el archivo.
                                         message = f'#ETAPA 6: Se descomprimen las imagenes obtenidas en la ETAPA 5 que se guardaron en [{destination_path}] --> unzip() --> Estado:[{status_code_unzip}] --> Mensaje:[{status_message_unzip}] --> {round(time.time() - execution_time_start,4)} seg'
-                                        write_log_message(log,message)
+                                        write_log_message(log,message,write_logs_flag)
 
                                         if status_code_unzip == 'OK':
 
@@ -223,12 +223,12 @@ def download_images():
                                             status_code_move_images,status_message_move_images,_ = move_images(dict_folder_list['path_TMP'],destination_folder)
 
                                             #log - Mensaje por consola.
-                                            message = f'ETAPA 7 --> {status_code_move_images}'
+                                            message = f'ETAPA 7 ----> {status_code_move_images}'
                                             print(message)
 
                                             #log - Se contruye el mensaje y se realiza la escritura en el archivo.
                                             message = f'#ETAPA 7: Se mueven las imagenes desde [{destination_path}] a [{destination_folder}] --> move_images() --> Estado:[{status_code_move_images}] --> Mensaje:[{status_message_move_images}] --> {round(time.time() - execution_time_start,4)} seg'
-                                            write_log_message(log,message)
+                                            write_log_message(log,message,write_logs_flag)
 
                                             if status_code_move_images == 'OK':
 
@@ -239,12 +239,12 @@ def download_images():
                                                 status_code_delete_folder,status_message_delete_folder,_ = delete_folder(dict_folder_list['path_TMP'])
 
                                                 #log - Mensaje por consola.
-                                                message = f'ETAPA 8 --> {status_code_delete_folder}'
+                                                message = f'ETAPA 8 ----> {status_code_delete_folder}'
                                                 print(message)
 
                                                 #log - Se contruye el mensaje y se realiza la escritura en el archivo.
                                                 message = f'#ETAPA 8: Se elimina el directorio [{destination_path}] --> delete_folder() --> Estado:[{status_code_delete_folder}] --> Mensaje:[{status_message_delete_folder}] --> {round(time.time() - execution_time_start,4)} seg'
-                                                write_log_message(log,message)
+                                                write_log_message(log,message,write_logs_flag)
 
                                                 if status_code_delete_folder == 'OK':
 
@@ -255,12 +255,12 @@ def download_images():
                                                     status_code_check_execution,status_message_check_execution,_ = check_execution_result(destination_folder,start_date,end_date,coverages)
 
                                                     #log - Mensaje por consola.
-                                                    message = f'ETAPA 9 --> {status_code_check_execution}'
+                                                    message = f'ETAPA 9 ----> {status_code_check_execution}'
                                                     print(message)
 
                                                     #log - Se contruye el mensaje y se realiza la escritura en el archivo.
                                                     message = f'#ETAPA 9: Se chequea la cantidad de imagenes obtenidas con respecto a la cantidad teorica --> check_execution_result() --> Estado:[{status_code_check_execution}] --> Mensaje:[{status_message_check_execution}] --> {round(time.time() - execution_time_start,4)} seg'
-                                                    write_log_message(log,message)
+                                                    write_log_message(log,message,write_logs_flag)
 
                                                     if status_code_check_execution == 'OK':
 
@@ -270,49 +270,53 @@ def download_images():
 
                                                         #log - Se contruye el mensaje y se realiza la escritura en el archivo que da cierre a la ejecucion.
                                                         message = f'#SE DA POR FINALIZADO EL PROCESO! --> Las imagenes se encuentran en [{destination_folder}] --> {round(time.time() - execution_time_start,4)} seg'
-                                                        write_log_message(log,message)
-                                                        log.close()
+                                                        write_log_message(log,message,write_logs_flag)
+
+                                                        if write_logs_flag == True:
+                                                            log.close()
+                                                        else:
+                                                            pass
 
                                                         return status_code_check_execution
 
                                                     else:
 
                                                         #log - Mensaje por consola.
-                                                        message = f'ETAPA 9 --> {status_code_check_execution}'
+                                                        message = f'ETAPA 9 ---> {status_code_check_execution}'
                                                         print(message)
 
                                                         #log - Se contruye el mensaje y se realiza la escritura.
-                                                        write_error_log_message(log)
+                                                        write_error_log_message(log,write_logs_flag)
 
                                                         return status_code_check_execution
                             
                                                 else:
                                                     #log - Mensaje por consola.
-                                                    message = f'ETAPA 8 --> {status_code_delete_folder}'
+                                                    message = f'ETAPA 8 ---> {status_code_delete_folder}'
                                                     print(message)
 
                                                     #log - Se contruye el mensaje y se realiza la escritura.
-                                                    write_error_log_message(log)
+                                                    write_error_log_message(log,write_logs_flag)
 
                                                     return status_code_delete_folder
                                                 
                                             else:
                                                 #log - Mensaje por consola.
-                                                message = f'ETAPA 7 --> {status_code_move_images}'
+                                                message = f'ETAPA 7 ---> {status_code_move_images}'
                                                 print(message)
 
                                                 #log - Se contruye el mensaje y se realiza la escritura en el archivo.
-                                                write_error_log_message(log)
+                                                write_error_log_message(log,write_logs_flag)
 
                                                 return status_code_move_images
 
                                         else:
                                             #log - Mensaje por consola.
-                                            message = f'ETAPA 6 --> {status_code_unzip}'
+                                            message = f'ETAPA 6 ---> {status_code_unzip}'
                                             print(message)
 
                                             #log - Se contruye el mensaje y se realiza la escritura en el archivo.
-                                            write_error_log_message(log)
+                                            write_error_log_message(log,write_logs_flag)
 
                                             return status_code_unzip
                                         
@@ -322,37 +326,37 @@ def download_images():
                                         print(message)
 
                                         #log - Se contruye el mensaje y se realiza la escritura en el archivo.
-                                        write_error_log_message(log)
+                                        write_error_log_message(log,write_logs_flag)
 
                                         return status_code_execute_request
 
                                 else:
                                     #log - Mensaje por consola.
-                                    message = f'ETAPA 4 --> {status_code_create_folder}'
+                                    message = f'ETAPA 4 ---> {status_code_create_folder}'
                                     print(message)
 
                                     #log - Se contruye el mensaje y se realiza la escritura.
-                                    write_error_log_message(log)
+                                    write_error_log_message(log,write_logs_flag)
 
                                     return status_code_create_folder
 
                             else:
                                 #log - Mensaje por consola en el archivo.
-                                message = f'ETAPA 3 --> {status_code_request_list}'
+                                message = f'ETAPA 3 ---> {status_code_request_list}'
                                 print(message)
 
                                 #log - Se contruye el mensaje y se realiza la escritura en el archivo.
-                                write_error_log_message(log)
+                                write_error_log_message(log,write_logs_flag)
 
                                 return status_code_request_list
                             
                         else:
                             #log - Mensaje por consola.
-                            message = f'ETAPA 2 --> {status_code_time}'
+                            message = f'ETAPA 2 ---> {status_code_time}'
                             print(message)
 
                             #log - Se contruye el mensaje y se realiza la escritura en el archivo.
-                            write_error_log_message(log)
+                            write_error_log_message(log,write_logs_flag)
 
                             return status_code_time
                         
@@ -362,13 +366,13 @@ def download_images():
                         status_message_load_secrets = 'load_secrets() --> Error: No fue posible leer los secretos para acceder al microservicio (API) de EARTHDATA'
 
                         #log - Mensaje por consola.
-                        message = f'ETAPA 1 --> {status_code_load_secrets}'
+                        message = f'ETAPA 1 ---> {status_code_load_secrets}'
                         print(message)
 
                         #log - Se contruye el mensaje y se realiza la escritura en el archivo.
                         message = f'#ETAPA N°1: Se cargan los secretos para realizar la conexion al microservicio (API) de EARTHDATA --> load_secrets() --> Estado:[{status_code_load_secrets}] --> Mensaje:[{status_message_load_secrets}] --> {round(time.time() - execution_time_start,4)} seg'
-                        write_log_message(log,message)
-                        write_error_log_message(log)
+                        write_log_message(log,message,write_logs_flag)
+                        write_error_log_message(log,write_logs_flag)
 
                         return status_code_load_secrets
                     
