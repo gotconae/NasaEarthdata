@@ -277,7 +277,7 @@ def download_images():
                                                         else:
                                                             pass
 
-                                                        return status_code_check_execution
+                                                        return status_code_check_execution,destination_folder
 
                                                     else:
 
@@ -288,7 +288,7 @@ def download_images():
                                                         #log - Se contruye el mensaje y se realiza la escritura.
                                                         write_error_log_message(log,write_logs_flag)
 
-                                                        return status_code_check_execution
+                                                        return status_code_check_execution,None
                             
                                                 else:
                                                     #log - Mensaje por consola.
@@ -298,7 +298,7 @@ def download_images():
                                                     #log - Se contruye el mensaje y se realiza la escritura.
                                                     write_error_log_message(log,write_logs_flag)
 
-                                                    return status_code_delete_folder
+                                                    return status_code_delete_folder,None
                                                 
                                             else:
                                                 #log - Mensaje por consola.
@@ -308,7 +308,7 @@ def download_images():
                                                 #log - Se contruye el mensaje y se realiza la escritura en el archivo.
                                                 write_error_log_message(log,write_logs_flag)
 
-                                                return status_code_move_images
+                                                return status_code_move_images,None
 
                                         else:
                                             #log - Mensaje por consola.
@@ -318,7 +318,7 @@ def download_images():
                                             #log - Se contruye el mensaje y se realiza la escritura en el archivo.
                                             write_error_log_message(log,write_logs_flag)
 
-                                            return status_code_unzip
+                                            return status_code_unzip,None
                                         
                                     else:
                                         #log - Mensaje por consola.
@@ -328,7 +328,7 @@ def download_images():
                                         #log - Se contruye el mensaje y se realiza la escritura en el archivo.
                                         write_error_log_message(log,write_logs_flag)
 
-                                        return status_code_execute_request
+                                        return status_code_execute_request,None
 
                                 else:
                                     #log - Mensaje por consola.
@@ -338,7 +338,7 @@ def download_images():
                                     #log - Se contruye el mensaje y se realiza la escritura.
                                     write_error_log_message(log,write_logs_flag)
 
-                                    return status_code_create_folder
+                                    return status_code_create_folder,None
 
                             else:
                                 #log - Mensaje por consola en el archivo.
@@ -348,7 +348,7 @@ def download_images():
                                 #log - Se contruye el mensaje y se realiza la escritura en el archivo.
                                 write_error_log_message(log,write_logs_flag)
 
-                                return status_code_request_list
+                                return status_code_request_list,None
                             
                         else:
                             #log - Mensaje por consola.
@@ -358,7 +358,7 @@ def download_images():
                             #log - Se contruye el mensaje y se realiza la escritura en el archivo.
                             write_error_log_message(log,write_logs_flag)
 
-                            return status_code_time
+                            return status_code_time,None
                         
                     else:
                         #Al no tener la funcion status_code / status_message se crea en esta etapa.
@@ -374,30 +374,30 @@ def download_images():
                         write_log_message(log,message,write_logs_flag)
                         write_error_log_message(log,write_logs_flag)
 
-                        return status_code_load_secrets
+                        return status_code_load_secrets,None
                     
                 else:
                     #log - Mensaje por consola.
                     message = f'ETAPA 0-3 --> {status_code_log_file}'
                     print(message)
 
-                    return status_code_log_file
+                    return status_code_log_file,None
                 
             else:
                 #log - Mensaje por consola.
                 message = f'ETAPA 0-2 --> {status_code_dict_folders}'
                 print(message)
 
-                return status_code_dict_folders
+                return status_code_dict_folders,None
         
         else:
             #log - Mensaje por consola.
             message = f'ETAPA 0-1 --> {status_code_root_folder}'
             print(message)
 
-            return status_code_root_folder
+            return status_code_root_folder,None
     
     except Exception as e:
         status_code = 'NOK'
         message = f'{status_code} --> Exception --> {e}'
-        return status_code
+        return status_code,None
