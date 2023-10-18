@@ -513,7 +513,7 @@ def execute_request(username:str,password:str,request_url:str,destination_path:s
     '''
     try:
         #Se define la estrategia de retry.
-        retry_strategy = Retry(total=num_retries,status_forcelist=http_status_list)
+        retry_strategy = Retry(total=num_retries,status_forcelist=http_status_list,backoff_factor=0.5)
 
         #Se crea un adaptador HTTP que contiene la estrategia de retry.
         adapter = HTTPAdapter(max_retries=retry_strategy)
