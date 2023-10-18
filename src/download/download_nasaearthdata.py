@@ -277,9 +277,11 @@ def download_images():
                                                         else:
                                                             pass
 
-                                                        return status_code_check_execution,destination_folder
+                                                        return status_code_check_execution,status_message_check_execution,destination_folder
 
                                                     else:
+                                                        #Se elimina el directorio TMP
+                                                        delete_folder(dict_folder_list['path_TMP'])
 
                                                         #log - Mensaje por consola.
                                                         message = f'ETAPA 9 ---> {status_code_check_execution}'
@@ -288,9 +290,12 @@ def download_images():
                                                         #log - Se contruye el mensaje y se realiza la escritura.
                                                         write_error_log_message(log,write_logs_flag)
 
-                                                        return status_code_check_execution,None
+                                                        return status_code_check_execution,status_message_check_execution,None
                             
                                                 else:
+                                                    #Se elimina el directorio TMP
+                                                    delete_folder(dict_folder_list['path_TMP'])
+
                                                     #log - Mensaje por consola.
                                                     message = f'ETAPA 8 ---> {status_code_delete_folder}'
                                                     print(message)
@@ -298,9 +303,12 @@ def download_images():
                                                     #log - Se contruye el mensaje y se realiza la escritura.
                                                     write_error_log_message(log,write_logs_flag)
 
-                                                    return status_code_delete_folder,None
+                                                    return status_code_delete_folder,status_message_delete_folder,None
                                                 
                                             else:
+                                                #Se elimina el directorio TMP
+                                                delete_folder(dict_folder_list['path_TMP'])
+
                                                 #log - Mensaje por consola.
                                                 message = f'ETAPA 7 ---> {status_code_move_images}'
                                                 print(message)
@@ -308,9 +316,12 @@ def download_images():
                                                 #log - Se contruye el mensaje y se realiza la escritura en el archivo.
                                                 write_error_log_message(log,write_logs_flag)
 
-                                                return status_code_move_images,None
+                                                return status_code_move_images,status_message_move_images,None
 
                                         else:
+                                            #Se elimina el directorio TMP
+                                            delete_folder(dict_folder_list['path_TMP'])
+
                                             #log - Mensaje por consola.
                                             message = f'ETAPA 6 ---> {status_code_unzip}'
                                             print(message)
@@ -318,9 +329,12 @@ def download_images():
                                             #log - Se contruye el mensaje y se realiza la escritura en el archivo.
                                             write_error_log_message(log,write_logs_flag)
 
-                                            return status_code_unzip,None
+                                            return status_code_unzip,status_message_unzip,None
                                         
                                     else:
+                                        #Se elimina el directorio TMP
+                                        delete_folder(dict_folder_list['path_TMP'])
+
                                         #log - Mensaje por consola.
                                         message = f'ETAPA 5-{indice_url+1} --> {status_code_execute_request}'
                                         print(message)
@@ -328,9 +342,12 @@ def download_images():
                                         #log - Se contruye el mensaje y se realiza la escritura en el archivo.
                                         write_error_log_message(log,write_logs_flag)
 
-                                        return status_code_execute_request,None
+                                        return status_code_execute_request,status_message_execute_request,None
 
                                 else:
+                                    #Se elimina el directorio TMP
+                                    delete_folder(dict_folder_list['path_TMP'])
+
                                     #log - Mensaje por consola.
                                     message = f'ETAPA 4 ---> {status_code_create_folder}'
                                     print(message)
@@ -338,9 +355,12 @@ def download_images():
                                     #log - Se contruye el mensaje y se realiza la escritura.
                                     write_error_log_message(log,write_logs_flag)
 
-                                    return status_code_create_folder,None
+                                    return status_code_create_folder,status_message_create_folder,None
 
                             else:
+                                #Se elimina el directorio TMP
+                                delete_folder(dict_folder_list['path_TMP'])
+
                                 #log - Mensaje por consola en el archivo.
                                 message = f'ETAPA 3 ---> {status_code_request_list}'
                                 print(message)
@@ -348,9 +368,12 @@ def download_images():
                                 #log - Se contruye el mensaje y se realiza la escritura en el archivo.
                                 write_error_log_message(log,write_logs_flag)
 
-                                return status_code_request_list,None
+                                return status_code_request_list,status_message_request_list,None
                             
                         else:
+                            #Se elimina el directorio TMP
+                            delete_folder(dict_folder_list['path_TMP'])
+
                             #log - Mensaje por consola.
                             message = f'ETAPA 2 ---> {status_code_time}'
                             print(message)
@@ -358,10 +381,13 @@ def download_images():
                             #log - Se contruye el mensaje y se realiza la escritura en el archivo.
                             write_error_log_message(log,write_logs_flag)
 
-                            return status_code_time,None
+                            return status_code_time,status_message_time,None
                         
                     else:
-                        #Al no tener la funcion status_code / status_message se crea en esta etapa.
+                        #Se elimina el directorio TMP
+                        delete_folder(dict_folder_list['path_TMP'])
+
+                        #load_secrets() --> La funcion no retorna 'status_code' / 'status_message', por lo tanto se definen en este momento.
                         status_code_load_secrets = 'NOK'
                         status_message_load_secrets = 'load_secrets() --> Error: No fue posible leer los secretos para acceder al microservicio (API) de EARTHDATA'
 
@@ -374,30 +400,36 @@ def download_images():
                         write_log_message(log,message,write_logs_flag)
                         write_error_log_message(log,write_logs_flag)
 
-                        return status_code_load_secrets,None
+                        return status_code_load_secrets,status_message_load_secrets,None
                     
                 else:
+                    #Se elimina el directorio TMP
+                    delete_folder(dict_folder_list['path_TMP'])
+
                     #log - Mensaje por consola.
                     message = f'ETAPA 0-3 --> {status_code_log_file}'
                     print(message)
 
-                    return status_code_log_file,None
+                    return status_code_log_file,status_message_log_file,None
                 
             else:
+                #Se elimina el directorio TMP
+                delete_folder(dict_folder_list['path_TMP'])
+
                 #log - Mensaje por consola.
                 message = f'ETAPA 0-2 --> {status_code_dict_folders}'
                 print(message)
 
-                return status_code_dict_folders,None
+                return status_code_dict_folders,status_message_dict_folders,None
         
         else:
             #log - Mensaje por consola.
             message = f'ETAPA 0-1 --> {status_code_root_folder}'
             print(message)
 
-            return status_code_root_folder,None
+            return status_code_root_folder,status_message_root_folder,None
     
     except Exception as e:
         status_code = 'NOK'
-        message = f'{status_code} --> Exception --> {e}'
-        return status_code,None
+        status_message = f'{status_code} --> Exception --> {e}'
+        return status_code,status_message,None
