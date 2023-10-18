@@ -10,7 +10,7 @@
 
 ## 2. OBJETIVO.
 
-Este proyecto tiene como objetivo disponibilizar una funcionalidad que facilite la consulta y descarga de datos correspondientes **NASA National Snow and Ice Data Center Distributed Active Archive Center (NSIDC DAAC)** mediante linea de comando y utilizando la funcionalidad disponible de consulta via API.
+Este proyecto tiene como objetivo disponibilizar una funcionalidad que facilite la consulta y descarga de datos correspondientes **NASA National Snow and Ice Data Center Distributed Active Archive Center (NSIDC DAAC)** y utilizando la funcionalidad disponible de consulta via API.
 Si bien originalmente esta funcionalidad fue pensada para consulta de datos correspondientes a la mision **Soil Moisture Active Passive Data (SMAP)** la misma puede ser utilizada para otras misiones que permiten la consulta y descarga de datos via API.
 
 ## 3. ALCANCE Y LIMITACIONES.
@@ -70,22 +70,31 @@ Dentro del directorio **src** se encontraran los siguientes directorios:
 
     - config --> Se encuentra el script para configuracion de parametros por parte del usuario necesarios para la ejecucion del programa.
     - download --> Se encuentra el script download_nasaearthdata.py que contiene la logica principal del programa.
-    - utils --> Se encuentra el script modules.py que contiene los modulos necesarios para la ejecucion del programa
+    - utils --> Se encuentra el script modules.py que contiene los modulos necesarios para la ejecucion del programa.
 
 Sumado a los directorios tambien se encuentran los siguientes archivos:
 
     - main.py --> Script sobre el cual se realiza la llamada para la ejecucion del programa.
-    - .env --> Archivo donde se especifican los secretos como variables de entorno necesarias para la conexion con el microservicio (API) de Earthdata
+    - .env --> Archivo donde se especifican los secretos como variables de entorno necesarias para la conexion con el microservicio (API) de Earthdata.
 
 
 ### 5.1.2 DIRECTORIO **test**
 
+Dentro del directorio **test** se incluye:
+
+    - Directorios especificos donde se encuentra el archivo **parameters.py** utilizado para cada Test Case.
+    - Resumen sobre las especificaciones de cada Test Case y el resultado de la ejecucion del mismo.
 
 ### 5.1.3 DIRECTORIO **notebooks**
 
+Dentro del directorio **notebooks** se encontraran los siguientes directorios:
+
+    - develop --> Se encuentran las notebooks (.ipynb) correspondientes al desarrollo inicial de funcionalidades del proyecto.
+    - NSIDC_data_products --> Se encuentran las notebooks (.ipynb) correspondientes a la identificacion de posibles valores a seterar por parte del usuario en las variables del archivo **parameters.py**.
+
 ## 6. INPUT / OUTPUT
 
-### 6.1 INPUT - PARAMETROS DATO DE ENTRADA
+### 6.1 INPUT - PARAMETROS - DATOS DE ENTRADA
 
 El usuario de la funcionalidad tiene permitido configurar la informacion a descargar mediante la especificacion de parametros especificos en el archivo **parameters.py** que se encuentra en **src/config/parameters.py**. A continuacion describe la totalidad de parametros disponibles:
 
@@ -111,6 +120,37 @@ El usuario de la funcionalidad tiene permitido configurar la informacion a desca
 | http_status_list       | Codigos de estado HTTP a manejar en los retries      | LIST[INT]    |                    | [429,500,501,502,503,504]                          | NO                                                 |               |
 | folder_name_list       | Listado de directorios a crear durante la ejecucion  | LIST[STRING] |                    | ['TMP','OUTPUT','LOGS']                            | NO                                                 |               |
 | script_parameters_name | Nombre del Script con los parametros de la ejecucion | STRING       |                    | 'parameters.py'                                    | NO                                                 |               |
+| write_logs_flag        | Flag - Creacion y escritura de logs                  | BOOL         |                    | True                                               | SI                                                 | (**)          |
 
 
 (*) Ver **notebooks/NSIDC_data_products/NSIDC - SMAP Data Products.ipynb**
+
+(**) True --> Se crea el archivo .txt de logs y se registran los eventos. / False --> No se crea el archivo .txt de logs y no se registran los eventos.
+
+### 6.1 OUTPUT - DATOS DE SALIDA
+
+Como parte de la ejecucion de la funcionalidad se crean los siguientes directorios dentro de **src**:
+
+     * OUTPUT --> Donde se almacenan las imagenes descargadas. Este directorio si no existe es creado en la primera ejecucion y es permanente (no es eliminado en proximas ejecuciones)
+     * LOGS --> Donde se almacenan los archivos *txt correspondientes a logs. Este directorio si no existe es creado en la primera ejecucion y es permanente (no es eliminado en proximas ejecuciones)
+     * TMP --> Donde se almacenan en forma temporal las imagenes obtenidas del response. Este directorio si no existe es creado en la primera ejecucion y es eliminado al finalizar la ejecucion.
+
+
+#### 6.1.1 EJECUCION COMO FUNCIONALIDAD UNICA
+
+Cuando se utiliza la funcionalidad solo para descarga de imagenes y no forma parte integral de otra funcionalidad se recomienda configurar la variable **write_logs_flag = True** que se encuentra **src/config/parameters.py** de forma tal de disponibilizar los logs correspondiente a cada ejecucion. 
+
+Como salida de la ejecucion de la funcionalidad se obtiene:
+
+1) Si se configuro **write_logs_flag = True** --> Se guarda informacion sobre la secuencia de etapas que forman parte de la ejecucion en curso en un archivo *txt en la carpeta **src/LOGS**. La nomenclatura del archivo log es identificador unico de la ejecucion y se relaciona con los valores especificados en las variables de  **src/config/parameters.py** (ej: 'log_ejecucion_2023-10-17T16-45-14_SPL3SMP_E_005_2023-01-01_2023-01-02.txt'). En caso de especificar **write_logs_flag = False** no se crea el archivo de logs y por lo tanto no se registra las secuencia de etapas durante la ejecucion.
+
+2) Por consola se imprime el estado ['OK','NOK'] de cada una de las etapas que forman parte de la ejecucion. Esto es de utilidad para el usuario de forma tal de dar seguimiento a la ejecucion.
+
+3) Las imagenes descargadas que se alojan en **src/OUTPUT**. Las mismas se guardan dentro de una carpeta creada durante la ejecucion cuya nomenclatura es identificador unico de la ejecucion y se relaciona con los valores especificados en las variables de  **src/config/parameters.py**. El nombre de la carpeta se condice con el nombre del archivo log en caso que este se obtenga.
+
+
+
+
+
+
+#### 6.1.2 EJECUCION COMO MODULO DE OTRA FUNCIONALIDAD
