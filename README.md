@@ -2,16 +2,21 @@
 
 ## National Snow and Ice Data Center Distributed Active Archive Center (NSIDC DAAC).
 
-## Funcionalidad para descarga de datos mediante el uso de EOS-CMR API.
+## Funcionalidad para descarga de datos (imagenes) mediante el uso de EOS-CMR API.
 
 ## 1. ABREVIATURAS.
 
-
+    * NSIDC: National Snow and Ice Data Center
+    * DAAC: Distributed Active Archive Center
+    * EOS: Earth Observing System
+    * CRM: Common Metadata Repository
+    * API: Application programming interface
+    * SMAP: Soil Moisture Active Passive Data
 
 ## 2. OBJETIVO.
 
 Este proyecto tiene como objetivo disponibilizar una funcionalidad que facilite la consulta y descarga de datos correspondientes **NASA National Snow and Ice Data Center Distributed Active Archive Center (NSIDC DAAC)** y utilizando la funcionalidad disponible de consulta via API.
-Si bien originalmente esta funcionalidad fue pensada para consulta de datos correspondientes a la mision **Soil Moisture Active Passive Data (SMAP)** la misma puede ser utilizada para otras misiones que permiten la consulta y descarga de datos via API.
+Si bien originalmente esta funcionalidad fue pensada para consulta de datos correspondientes a la mision **Soil Moisture Active Passive Data (SMAP)** la misma puede ser utilizada para otras misiones que permiten la consulta y descarga de datos utilizando EOS-CMR API.
 
 ## 3. ALCANCE Y LIMITACIONES.
 
@@ -41,7 +46,7 @@ Sumado a lo anterior se tiene la posibilidad de consultar una gran seleccion de 
 * Earthdata CRM Search - API Documentation https://cmr.earthdata.nasa.gov/search/site/docs/search/api.html#_ga=2.224475802.1037008902.1697547140-1448504569.1697547140
 
 
-### 4.2 SMAP (Soil Moisture Active Passive)
+### 4.2 SMAP.
 
 * Soil Moisture Active Passive Data (SMAP) https://nsidc.org/data/smap
 
@@ -138,7 +143,7 @@ Como parte de la ejecucion de la funcionalidad se crean los siguientes directori
 
 #### 6.1.1 EJECUCION COMO FUNCIONALIDAD UNICA
 
-Cuando se utiliza la funcionalidad solo para descarga de imagenes y no forma parte integral de otra funcionalidad se recomienda configurar la variable **write_logs_flag = True** que se encuentra **src/config/parameters.py** de forma tal de disponibilizar los logs correspondiente a cada ejecucion. 
+Cuando se utiliza la funcionalidad solo para descarga de imagenes y no forma parte integral de otra funcionalidad **SE RECOMIENDA** configurar la variable **write_logs_flag = True** que se encuentra **src/config/parameters.py** de forma tal de disponibilizar los logs (archivo .txt) correspondiente a cada ejecucion. 
 
 Como salida de la ejecucion de la funcionalidad se obtiene:
 
@@ -146,11 +151,57 @@ Como salida de la ejecucion de la funcionalidad se obtiene:
 
 2) Por consola se imprime el estado ['OK','NOK'] de cada una de las etapas que forman parte de la ejecucion. Esto es de utilidad para el usuario de forma tal de dar seguimiento a la ejecucion.
 
-3) Las imagenes descargadas que se alojan en **src/OUTPUT**. Las mismas se guardan dentro de una carpeta creada durante la ejecucion cuya nomenclatura es identificador unico de la ejecucion y se relaciona con los valores especificados en las variables de  **src/config/parameters.py**. El nombre de la carpeta se condice con el nombre del archivo log en caso que este se obtenga.
-
-
-
-
+3) Las imagenes descargadas que se alojan en **src/OUTPUT**. Las mismas se guardan dentro de una carpeta creada durante la ejecucion cuya nomenclatura es identificador unico de la ejecucion y se relaciona con los valores especificados en las variables de  **src/config/parameters.py**. El nombre de la carpeta se condice con el nombre del archivo log en caso que se especifique su obtencion.
 
 
 #### 6.1.2 EJECUCION COMO MODULO DE OTRA FUNCIONALIDAD
+
+Cuando se utiliza la funcionalidad como un modulo especifico que forma parte de otra funcionalidad **SE RECOMIENDA** configurar la variable **write_logs_flag = False** que se encuentra **src/config/parameters.py** de forma tal de **NO** disponibilizar los logs (archivo .txt) correspondiente a cada ejecucion. 
+
+Como salida de la ejecucion de la funcionalidad se obtiene:
+
+1) Las imagenes descargadas que se alojan en **src/OUTPUT**. Las mismas se guardan dentro de una carpeta creada durante la ejecucion cuya nomenclatura es identificador unico de la ejecucion y se relaciona con los valores especificados en las variables de  **src/config/parameters.py**. El nombre de la carpeta se condice con el nombre del archivo log en caso que se especifique su obtencion.
+
+2) Como devolucion de la ejecucion (return):
+    * status_code_check_execution(str): Codigo de estado ['OK','NOK'].
+    * status_message_check_execution(str): Mensaje de estado.
+    * destination_folder(str): Directorio donde se alojan las imagenes descargadas.
+
+## 7. EJECUCION
+
+1. Clonar el repositorio mediante HTTPS
+
+    ```bash
+    git clone https://github.com/gotconae/NasaEarthdata.git
+    ```
+
+2. Posicionarse en la raiz del directorio **NasaEarthdata** y crear un entorno virtual. Instalar las dependencias:
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+3. Configurar las credenciales de acceso a EARTHDATA en el archivo *.env* que se encuentra en el directorio **src/.env**
+
+    - API_USER = ''
+    - API_SECRET = ''
+    - API_EMAIL = ''
+
+
+4. Completar el conjunto de parametros del script *parameters.py* que se encuentra en el directorio **src/config**
+
+5. Posicionarse dentro del directorio **src** y ejecutar el script principal
+
+    ```bash
+    cd src
+
+    python main.py
+    ```
+
+
+## 8. PROBLEMAS IDENTIFICADOS
+
+## 9. TO DO
+
+    * [ ] Refactor a OOP 
+    * [ ] Automatizacion de Test Cases
