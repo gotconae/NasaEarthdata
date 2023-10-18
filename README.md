@@ -169,7 +169,7 @@ Como salida de la ejecucion de la funcionalidad se obtiene:
 
 ## 7. EJECUCION
 
-1. Clonar el repositorio mediante HTTPS
+1. Clonar el repositorio mediante HTTPS:
 
     ```bash
     git clone https://github.com/gotconae/NasaEarthdata.git
@@ -181,16 +181,15 @@ Como salida de la ejecucion de la funcionalidad se obtiene:
     pip install -r requirements.txt
     ```
 
-3. Configurar las credenciales de acceso a EARTHDATA en el archivo *.env* que se encuentra en el directorio **src/.env**
+3. Configurar las credenciales de acceso a **EARTHDATA** en el archivo *.env* que se encuentra en el directorio **/src**
 
     - API_USER = ''
     - API_SECRET = ''
     - API_EMAIL = ''
 
+4. Completar el conjunto de parametros requeridos del script *parameters.py* que se encuentra en el directorio **/src/config**
 
-4. Completar el conjunto de parametros del script *parameters.py* que se encuentra en el directorio **src/config**
-
-5. Posicionarse dentro del directorio **src** y ejecutar el script principal
+5. Posicionarse dentro del directorio **/src** y ejecutar el script principal
 
     ```bash
     cd src
@@ -198,8 +197,15 @@ Como salida de la ejecucion de la funcionalidad se obtiene:
     python main.py
     ```
 
+6. Finalizada la ejecucion y si la misma fue satisfactoria se encontraran las imagenes descargadas en el directorio **/src/OUPUT/NOMBRE_CARPETA** donde **NOMBRE_CARPETA** se corresponde con el identificador unico de la ejecucion realizada. 
+
+    Si ademas se especifico **write_logs_flag = True** en **src/config/parameters.py** entonces se dispondra del archivo *txt con logs en **/src/LOGS/NOMBRE_LOG** donde **NOMBRE_LOG** se corresponde con el identificador unico de la ejecucion realizada
+
 
 ## 8. PROBLEMAS IDENTIFICADOS
+
+
+
 
 ## 9. TO DO
 
