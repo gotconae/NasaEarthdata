@@ -66,8 +66,9 @@ Sumado a lo anterior se tiene la posibilidad de consultar una gran seleccion de 
 El proyecto contiene los siguientes directorios:
 
     - src --> Se encuentra el codigo fuente del proyecto.
-    - test --> Se encuentra los test case y resultados de testing sobre el proyecto.
+    - tests --> Se encuentra los test case (unit / integration) y resultados.
     - notebooks --> Se encuentra informacion referida al desarrollo de funcionalidades principales y de consulta general.
+    - docs --> Se encuentra documentacion adicional y complementaria sobre el proyecto.
 
 ### 5.1.1 DIRECTORIO **src**
 
@@ -87,8 +88,10 @@ Sumado a los directorios tambien se encuentran los siguientes archivos:
 
 Dentro del directorio **test** se incluye:
 
-    - Directorios especificos donde se encuentra el archivo **parameters.py** utilizado para cada Test Case.
-    - Resumen sobre las especificaciones de cada Test Case y el resultado de la ejecucion del mismo.
+    - Directorio unit: Se incluyen los tests unitarios.
+    - Directorio integration: Se incluyen los test de integracion. Dentro de este directorio se incluye en directorios especificos los archivos **parameters.py** utilizados para cada configuracion evaluada.
+
+Sumado a lo anterior se incluye un archivo resumen donde se indica las caracterisitcas de cada Test Case y el resultado de la ejecucion del mismo.
 
 ### 5.1.3 DIRECTORIO **notebooks**
 
@@ -96,6 +99,7 @@ Dentro del directorio **notebooks** se encontraran los siguientes directorios:
 
     - develop --> Se encuentran las notebooks (.ipynb) correspondientes al desarrollo inicial de funcionalidades del proyecto.
     - NSIDC_data_products --> Se encuentran las notebooks (.ipynb) correspondientes a la identificacion de posibles valores a seterar por parte del usuario en las variables del archivo **parameters.py**.
+
 
 ## 6. INPUT / OUTPUT
 
@@ -107,30 +111,34 @@ El usuario de la funcionalidad tiene permitido configurar la informacion a desca
 | -----------------------|:----------------------------------------------------:| :-----------:|:------------------:|:--------------------------------------------------:|:--------------------------------------------------:|:-------------:|
 | start_date             | Fecha de Inicio del intervalo temporal               | STRING       | YYYY-MM-DD         | '2023-01-01'                                       | SI                                                 |               |
 | start_time             | Hora de Inicio del intervalo temporal                | STRING       | HH-mm-ss           | '00:00:00'                                         | SI                                                 |               |
-| end_date               | Fecha de Fin del intervalo temporal                  | STRING       | YYYY-MM-DD         | '2023-01-31'                                       | SI                                                 |               |  
-| end_time               | Hora de Fin del intervalo temporal                   | STRING       | HH-mm-ss           | '00:00:00'                                         | SI                                                 |               |
+| end_date               | Fecha de Fin del intervalo temporal                  | STRING       | YYYY-MM-DD         | '2023-01-31'                                       | SI                                                 | (1)           |  
+| end_time               | Hora de Fin del intervalo temporal                   | STRING       | HH-mm-ss           | '00:00:00'                                         | SI                                                 | (1)           |
 | lower_left_longitude   | Longitud Inferior Izquierda                          | STRING       |                    | '-90'                                              | SI                                                 |               |
 | lower_left_latitude    | Latitud Inferior Izquierda                           | STRING       |                    | '-60'                                              | SI                                                 |               |
 | upper_right_longitude  | Longitud Superior derecha                            | STRING       |                    | '-30'                                              | SI                                                 |               |
 | upper_right_latitude   | Latitud Superior Derecha                             | STRING       |                    | '-60'                                              | SI                                                 |               |
+| bbox                   | Bounding Box                                         | STRING       |                    | '2023-01-01,00:00:00,2023-01-03,00:00:00'          | NO                                                 | (2)           |
 | base_url               | URL base de NSIDC                                    | STRING       |                    | 'https://n5eil02u.ecs.nsidc.org/egi/request'       | NO                                                 |               |
-| short_name             | Abreviatura del Producto NSIDC                       | STRING       |                    | 'SPL3SMP_E'                                        | SI                                                 | (*)           |
-| version                | Version del Producto NSIDC                           | STRING       |                    | '005'                                              | SI                                                 | (*)           |
-| formato                | Formato de las imagenes a obtener                    | STRING       |                    | 'GeoTIFF'                                          | SI                                                 | (*)           |
-| coverages              | Variable / capa o grupo de parámetros                | LIST[STRING] |                    | ['/Soil_Moisture_Retrieval_Data_AM/soil_moisture'] | SI                                                 | (*)           |
-| projection             | Proyeccion                                           | STRING       |                    | 'Geographic'                                       | SI                                                 | (*)           |
+| short_name             | Abreviatura del Producto NSIDC                       | STRING       |                    | 'SPL3SMP_E'                                        | SI                                                 | (3)           |
+| version                | Version del Producto NSIDC                           | STRING       |                    | '005'                                              | SI                                                 | (2)           |
+| formato                | Formato de las imagenes a obtener                    | STRING       |                    | 'GeoTIFF'                                          | SI                                                 | (3)           |
+| coverages              | Variable / capa o grupo de parámetros                | LIST[STRING] |                    | ['/Soil_Moisture_Retrieval_Data_AM/soil_moisture'] | SI                                                 | (3)           |
+| projection             | Proyeccion                                           | STRING       |                    | 'Geographic'                                       | SI                                                 | (3)           |
 | page_size              | Cantidad de items a devolver en una respuesta        | STRING       |                    | '2000'                                             | NO                                                 |               |
 | request_mode           | Modo del Request ['async','stream']                  | STRING       |                    | 'stream'                                           | NO                                                 |               |
 | num_retries            | Cantidad de retries a realizar en el request         | INT          |                    | 3                                                  | NO                                                 |               |
 | http_status_list       | Codigos de estado HTTP a manejar en los retries      | LIST[INT]    |                    | [429,500,501,502,503,504]                          | NO                                                 |               |
 | folder_name_list       | Listado de directorios a crear durante la ejecucion  | LIST[STRING] |                    | ['TMP','OUTPUT','LOGS']                            | NO                                                 |               |
 | script_parameters_name | Nombre del Script con los parametros de la ejecucion | STRING       |                    | 'parameters.py'                                    | NO                                                 |               |
-| write_logs_flag        | Flag - Creacion y escritura de logs                  | BOOL         |                    | True                                               | SI                                                 | (**)          |
+| write_logs_flag        | Flag - Creacion y escritura de logs                  | BOOL         |                    | True                                               | SI                                                 | (4)           |
 
+(1) La configuracion requerida del request **NO PERMITE** dejar estas variables como un string vacio o especificar el mismo valor que start_date / start_time --> Es requerido que se especifique un rango temporal donde start_date y end_date tengan como minimo 1 dia de diferencia y con valores crecientes (end_date > start_date)
 
-(*) Ver **notebooks/NSIDC_data_products/NSIDC - SMAP Data Products.ipynb**
+(2) Esta variable es contruida utilizando las variables **start_date / start_time / end_date / end_time**, por lo tanto tener cuidado de **NO MODIFICARLA**.
 
-(**) True --> Se crea el archivo .txt de logs y se registran los eventos. / False --> No se crea el archivo .txt de logs y no se registran los eventos.
+(3) Para el caso de consulta de datos correspondientes a **SMAP** tomar como referencia de posibles valores lo especificado en **notebooks/NSIDC_data_products/NSIDC - SMAP Data Products.ipynb**.
+
+(4) Posibles valores: True --> Se crea el archivo .txt de logs y se registran los eventos de la ejecucion. / False --> No se crea el archivo .txt de logs y no se registran los eventos de la ejecucion.
 
 ### 6.1 OUTPUT - DATOS DE SALIDA
 
@@ -147,11 +155,15 @@ Cuando se utiliza la funcionalidad solo para descarga de imagenes y no forma par
 
 Como salida de la ejecucion de la funcionalidad se obtiene:
 
-1) Si se configuro **write_logs_flag = True** --> Se guarda informacion sobre la secuencia de etapas que forman parte de la ejecucion en curso en un archivo *txt en la carpeta **src/LOGS**. La nomenclatura del archivo log es identificador unico de la ejecucion y se relaciona con los valores especificados en las variables de  **src/config/parameters.py** (ej: 'log_ejecucion_2023-10-17T16-45-14_SPL3SMP_E_005_2023-01-01_2023-01-02.txt'). En caso de especificar **write_logs_flag = False** no se crea el archivo de logs y por lo tanto no se registra las secuencia de etapas durante la ejecucion.
+1) Si se configuro **write_logs_flag = True** --> Se guarda informacion sobre la secuencia de etapas que forman parte de la ejecucion en curso en un archivo *txt en la carpeta **src/LOGS**. La nomenclatura del archivo log es identificador unico de la ejecucion y se relaciona con los valores especificados en las variables de  **src/config/parameters.py** (ej: 'log_ejecucion_2023-10-17T16-45-14_SPL3SMP_E_005_2023-01-01_2023-01-02.txt'). 
+
+    En caso de especificar **write_logs_flag = False** no se crea el archivo de logs y por lo tanto no se registra las secuencia de etapas durante la ejecucion.
 
 2) Por consola se imprime el estado ['OK','NOK'] de cada una de las etapas que forman parte de la ejecucion. Esto es de utilidad para el usuario de forma tal de dar seguimiento a la ejecucion.
 
-3) Las imagenes descargadas que se alojan en **src/OUTPUT**. Las mismas se guardan dentro de una carpeta creada durante la ejecucion cuya nomenclatura es identificador unico de la ejecucion y se relaciona con los valores especificados en las variables de  **src/config/parameters.py**. El nombre de la carpeta se condice con el nombre del archivo log en caso que se especifique su obtencion.
+3) Las imagenes descargadas que se alojan en **src/OUTPUT**. Las mismas se guardan dentro de una carpeta creada durante la ejecucion cuya nomenclatura es identificador unico de la ejecucion y se relaciona con los valores especificados en las variables de  **src/config/parameters.py**. El nombre de la carpeta se condice con el nombre del archivo log en caso que se especifique su obtencion. 
+
+    Es importante aclarar que la totalidad de imagenes descargadas se guardan en una carpeta unica, por lo tanto si es necesario obtener imagenes de diferentes capas (coverages) es necesario realizar diferentes ejecuciones.
 
 
 #### 6.1.2 EJECUCION COMO MODULO DE OTRA FUNCIONALIDAD
@@ -160,7 +172,9 @@ Cuando se utiliza la funcionalidad como un modulo especifico que forma parte de 
 
 Como salida de la ejecucion de la funcionalidad se obtiene:
 
-1) Las imagenes descargadas que se alojan en **src/OUTPUT**. Las mismas se guardan dentro de una carpeta creada durante la ejecucion cuya nomenclatura es identificador unico de la ejecucion y se relaciona con los valores especificados en las variables de  **src/config/parameters.py**. El nombre de la carpeta se condice con el nombre del archivo log en caso que se especifique su obtencion.
+1) Las imagenes descargadas que se alojan en **src/OUTPUT**. Las mismas se guardan dentro de una carpeta creada durante la ejecucion cuya nomenclatura es identificador unico de la ejecucion y se relaciona con los valores especificados en las variables de  **src/config/parameters.py**. El nombre de la carpeta se condice con el nombre del archivo log en caso que se especifique su obtencion. 
+
+    Es importante aclarar que la totalidad de imagenes descargadas se guardan en una carpeta unica, por lo tanto si es necesario obtener imagenes de diferentes capas (coverages) es necesario realizar diferentes ejecuciones.
 
 2) Como devolucion de la ejecucion (return):
     * status_code_check_execution(str): Codigo de estado ['OK','NOK'].
@@ -175,13 +189,15 @@ Como salida de la ejecucion de la funcionalidad se obtiene:
     git clone https://github.com/gotconae/NasaEarthdata.git
     ```
 
-2. Posicionarse en la raiz del directorio **NasaEarthdata** y crear un entorno virtual. Instalar las dependencias:
+2. Posicionarse en la raiz del directorio **NasaEarthdata** y crear un entorno virtual. Para esto se disponen diferentes alternativas y como referencia se puede consultar la documentacion oficial de Python https://docs.python.org/3/library/venv.html
+
+3. Instalar las dependencias necesarias:
 
     ```bash
     pip install -r requirements.txt
     ```
 
-3. Configurar las credenciales de acceso a **EARTHDATA** en el archivo *.env* que se encuentra en el directorio **/src**
+3. Configurar las credenciales de acceso a **EARTHDATA** en el archivo *.env* que se encuentra en el directorio **/src**:
 
     - API_USER = ''
     - API_SECRET = ''
@@ -189,7 +205,7 @@ Como salida de la ejecucion de la funcionalidad se obtiene:
 
 4. Completar el conjunto de parametros requeridos del script *parameters.py* que se encuentra en el directorio **/src/config**
 
-5. Posicionarse dentro del directorio **/src** y ejecutar el script principal
+5. Posicionarse dentro del directorio **/src** y ejecutar el script principal:
 
     ```bash
     cd src
@@ -199,15 +215,48 @@ Como salida de la ejecucion de la funcionalidad se obtiene:
 
 6. Finalizada la ejecucion y si la misma fue satisfactoria se encontraran las imagenes descargadas en el directorio **/src/OUPUT/NOMBRE_CARPETA** donde **NOMBRE_CARPETA** se corresponde con el identificador unico de la ejecucion realizada. 
 
-    Si ademas se especifico **write_logs_flag = True** en **src/config/parameters.py** entonces se dispondra del archivo *txt con logs en **/src/LOGS/NOMBRE_LOG** donde **NOMBRE_LOG** se corresponde con el identificador unico de la ejecucion realizada
+    Si ademas se especifico en **src/config/parameters.py** la variable **write_logs_flag = True** entonces se dispondra del archivo *txt con logs en **/src/LOGS/NOMBRE_LOG** donde **NOMBRE_LOG** se corresponde con el identificador unico de la ejecucion realizada
 
 
-## 8. PROBLEMAS IDENTIFICADOS
+## 8. ISSUES IDENTIFICADOS
+
+La forma de identificar los errores ocurridos en tiempo de ejecucion son:
+
+1)  Si se configuro **write_logs_flag = True** se tendra disponible el archivo de logs donde se identifica en que etapa se produjo el error junto con el mensaje correspondiente. 
+
+2) Como parte del return de la ejecucion se tiene obtiene el **status_message_check_execution** con el mensaje de error correspondiente.
+
+### 8.1 NO RELACIONADOS CON LA LOGICA DE LA FUNCIONALIDAD.
+
+Estos issues estan relacionados con valores de las variables que debe completar el usuario en el archivo **parameters.py** que son incorrectos y por lo tanto se produce un error al momento de realizar el request a la API. En caso que esto suceda se obtendra un mensaje de error que contiene la consigna **'content-disposition'** dentro de su contenido. 
+Para dar solucion a este tipo de issue revisar detalladamente los valores introducidos en las variables considerando lo indicando en **6.1 INPUT - PARAMETROS - DATOS DE ENTRADA** ye jecutar el proceso nuevamente.
+
+### 8.2 INDISPONIBILIDAD DEL SERVICIO EOS-CMR API.
+
+Si bien al momento de realizar los requests a EOS-CMR API se dispone de la funcionalidad para retry pueden ocurrir errores en tiempo de ejecucion por indisponibilidad del servicio. En caso que esto suceda se obtendra un mensaje de error que contiene alguno de los siguiente textos:
+
+    - HTTPSConnectionPool(host='n5eil02u.ecs.nsidc.org', port=443): Max retries exceeded with url
+    - Caused by ResponseError('too many 503 error responses')
+    - Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1006)'))
+    - Caused by ProtocolError('Connection aborted.', ConnectionResetError(10054, 'Se ha forzado la interrupcion de una conexion existente por el host remoto', None, 10054, None))
+
+En caso de identificar un mensaje de error distinto por favor dar aviso a **ccollado@conae.gov.ar** incluyendo el archivo de logs.
 
 
+### 8.3 RELACIONADOS CON LA LOGICA DE LA FUNCIONALIDAD.
 
+Como resultado de los **integration test cases** ejecutados no se identificaron errores relacionados con la logica de la funcionalidad.
+
+En caso de detectar alguna por favor dar aviso a **ccollado@conae.gov.ar** incluyendo:
+
+    - Archivo **parametros.py**
+    - Archivo de logs
+    - Informacion adicional que permita replicar las condiciones de ejecucion: SO utilizado / IDE utilizado / archivo requirements.txt en caso de modificar las dependencias / etc.
 
 ## 9. TO DO
 
+    * [ ] Incorporar validaciones sobre los parametros temporales que recibe la funcion **temporal_range()**
+    * [ ] Realizar Unit Test de las funciones definidas en **/src/utils/modules.py**
     * [ ] Refactor a OOP 
-    * [ ] Automatizacion de Test Cases
+    * [ ] Automatizacion de Test Cases (unit / integration)
+    * [ ] Uso de la funcionalidad con Docker
