@@ -266,14 +266,14 @@ def download_images():
                                                     ### ETAPA N°9: Se chequea la cantidad de imagenes obtenidas con respecto a la cantidad teorica --> check_execution_result() ###
                                                     ###############################################################################################################################
 
-                                                    status_code_check_execution,status_message_check_execution,_ = check_execution_result(destination_folder,start_date,end_date,coverages)
+                                                    status_code_check_execution,status_message_check_execution,cantidad_dias,cantidad_imagenes = check_execution_result(destination_folder,start_date,end_date)
 
                                                     #log - Mensaje por consola.
                                                     message = f'ETAPA 9 ----> {status_code_check_execution}'
                                                     print(message)
 
                                                     #log - Se contruye el mensaje y se realiza la escritura en el archivo.
-                                                    message = f'#ETAPA 9: Se chequea la cantidad de imagenes obtenidas con respecto a la cantidad teorica --> check_execution_result() --> Estado:[{status_code_check_execution}] --> Mensaje:[{status_message_check_execution}] --> {round(time.time() - execution_time_start,4)} seg'
+                                                    message = f'#ETAPA 9: Se pidio procesar {cantidad_dias} dias y se obtuvieron {cantidad_imagenes} imagenes --> check_execution_result() --> Estado:[{status_code_check_execution}] --> Mensaje:[{status_message_check_execution}] --> {round(time.time() - execution_time_start,4)} seg'
                                                     write_log_message(log,message,write_logs_flag)
 
                                                     if status_code_check_execution == 'OK':
