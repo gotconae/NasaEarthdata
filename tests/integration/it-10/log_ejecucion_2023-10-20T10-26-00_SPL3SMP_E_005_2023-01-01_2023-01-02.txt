@@ -1,0 +1,78 @@
+
+#############################################################################################
+
+ATENCION! --> SE INICIA LA EJECUCION DEL PROCESO [SPL3SMP_E] CON FECHA: [2023-10-20T10:26:00]
+
+#############################################################################################
+
+######################################################################################################################################################
+
+LOS PARAMETROS QUE SE CARGARON EN EL SCRIPT [parameters.py] Y SERAN UTILIZADOS PARA LA EJECUCION EN CURSO SON:
+
+	base_url = https://n5eil02u.ecs.nsidc.org/egi/request
+
+	bbox = -90,-60,-30,20
+
+	coverages = ['/Soil_Moisture_Retrieval_Data_AM/soil_moisture', '/Soil_Moisture_Retrieval_Data_PM/soil_moisture_pm']
+
+	end_date = 2023-01-02
+
+	end_time = 00:00:00
+
+	folder_name_list = ['TMP', 'OUTPUT', 'LOGS']
+
+	formato = HDF-EOS5
+
+	http_status_list = [429, 500, 501, 502, 503, 504]
+
+	lower_left_latitude = -60
+
+	lower_left_longitude = -90
+
+	num_retries = 3
+
+	page_size = 2000
+
+	projection = Geographic
+
+	request_mode = stream
+
+	script_parameters_name = parameters.py
+
+	short_name = SPL3SMP_E
+
+	start_date = 2023-01-01
+
+	start_time = 00:00:00
+
+	upper_right_latitude = 20
+
+	upper_right_longitude = -30
+
+	version = 005
+
+	write_logs_flag = True
+
+######################################################################################################################################################
+
+#ETAPA 1: Se cargan los secretos para realizar la conexion al microservicio (API) de EARTHDATA --> load_secrets() --> Estado:[OK] --> Mensaje:[] --> 0.003 seg
+
+#ETAPA 2: Se construye la ventana temporal [2023-01-01T00:00:00Z,2023-01-02T00:00:00Z] a utilizar en el request --> temporal_range() --> Estado:[OK] --> Mensaje:[] --> 0.003 seg
+
+#ETAPA 3: Se obtiene el listado de URLs (cantidad = 2) a utilizar en el request --> request_urls_list() --> Estado:[OK] --> Mensaje:[] --> 0.003 seg
+
+#ETAPA 4: Se crea el directorio [2023-10-20T10-26-00_SPL3SMP_E_005_2023-01-01_2023-01-02] dentro del directorio [C:\Users\cj_co\OneDrive\Desktop\CONAE\Desarrollos\NasaEarthdata\src\OUTPUT] donde se almacena la salida del proceso --> create_folder() --> Estado:[OK] --> Mensaje:[] --> 0.003 seg
+
+#ETAPA 5-1: Se realiza el request a [https://n5eil02u.ecs.nsidc.org/egi/request?short_name=SPL3SMP_E&version=005&format=HDF-EOS5&time=2023-01-01T00:00:00Z,2023-01-02T00:00:00Z&Coverage=/Soil_Moisture_Retrieval_Data_AM/soil_moisture&projection=Geographic&bbox=-90,-60,-30,20&email=ccollado@conae.gov.ar&page_size=2000&request_mode=stream] y el resultado se guarda en [C:\Users\cj_co\OneDrive\Desktop\CONAE\Desarrollos\NasaEarthdata\src\TMP] --> execute_request() --> Estado:[OK] --> Mensaje:[HTTP response status code : 200] --> 23.5055 seg
+
+#ETAPA 5-2: Se realiza el request a [https://n5eil02u.ecs.nsidc.org/egi/request?short_name=SPL3SMP_E&version=005&format=HDF-EOS5&time=2023-01-01T00:00:00Z,2023-01-02T00:00:00Z&Coverage=/Soil_Moisture_Retrieval_Data_PM/soil_moisture_pm&projection=Geographic&bbox=-90,-60,-30,20&email=ccollado@conae.gov.ar&page_size=2000&request_mode=stream] y el resultado se guarda en [C:\Users\cj_co\OneDrive\Desktop\CONAE\Desarrollos\NasaEarthdata\src\TMP] --> execute_request() --> Estado:[OK] --> Mensaje:[HTTP response status code : 200] --> 44.8231 seg
+
+#ETAPA 6: Se descomprimen las imagenes obtenidas en la ETAPA 5 que se guardaron en [C:\Users\cj_co\OneDrive\Desktop\CONAE\Desarrollos\NasaEarthdata\src\TMP] --> unzip() --> Estado:[OK] --> Mensaje:[] --> 44.8778 seg
+
+#ETAPA 7: Se mueven las imagenes desde [C:\Users\cj_co\OneDrive\Desktop\CONAE\Desarrollos\NasaEarthdata\src\TMP] a [C:\Users\cj_co\OneDrive\Desktop\CONAE\Desarrollos\NasaEarthdata\src\OUTPUT\2023-10-20T10-26-00_SPL3SMP_E_005_2023-01-01_2023-01-02] --> move_images() --> Estado:[OK] --> Mensaje:[] --> 44.8793 seg
+
+#ETAPA 8: Se elimina el directorio [C:\Users\cj_co\OneDrive\Desktop\CONAE\Desarrollos\NasaEarthdata\src\TMP] --> delete_folder() --> Estado:[OK] --> Mensaje:[] --> 44.8793 seg
+
+#ETAPA 9: Se pidio procesar 2 dias y se obtuvieron 2 imagenes --> check_execution_result() --> Estado:[OK] --> Mensaje:[] --> 44.8793 seg
+
+#SE DA POR FINALIZADO EL PROCESO! --> Las imagenes se encuentran en [C:\Users\cj_co\OneDrive\Desktop\CONAE\Desarrollos\NasaEarthdata\src\OUTPUT\2023-10-20T10-26-00_SPL3SMP_E_005_2023-01-01_2023-01-02] --> 44.8838 seg
