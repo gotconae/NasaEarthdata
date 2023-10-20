@@ -28,8 +28,8 @@ version = '005'
 formato = 'GeoTIFF'
 
 # A7. Variable / Capa --> [list] + [str]
-coverages = ['/Soil_Moisture_Retrieval_Data_AM/roughness_coefficient',
-             '/Soil_Moisture_Retrieval_Data_PM/roughness_coefficient_pm']
+coverages = ['/Soil_Moisture_Retrieval_Data_AM/vegetation_water_content',
+	         '/Soil_Moisture_Retrieval_Data_PM/vegetation_water_content_pm']
 
 # A8. Proyeccion --> [str]
 projection = 'Geographic' 
