@@ -255,8 +255,8 @@ En caso de detectar alguna por favor dar aviso a **ccollado@conae.gov.ar** inclu
 
 ## 9. TO DO
 
-    * [ ] Incorporar validaciones sobre los parametros temporales que recibe la funcion **temporal_range()**
-    * [ ] Realizar Unit Test de las funciones definidas en **/src/utils/modules.py**
+    * [ ] Incorporar validaciones sobre los parametros temporales que recibe la funcion temporal_range()
+    * [ ] Realizar Unit Test de las funciones definidas en /src/utils/modules.py
     * [ ] Refactor a OOP 
     * [ ] Automatizacion de Test Cases (unit / integration)
     * [ ] Uso de la funcionalidad con Docker
