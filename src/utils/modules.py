@@ -66,7 +66,7 @@ def temporal_range(start_date:str,start_time:str,end_date:str,end_time:str) -> t
         - temporal(str): Ventana temporal.
     '''
     try:
-        if len(start_date) and len(start_time) and len(end_date) and len(end_time):
+        if (len(start_date) == 10) and (len(start_time) == 8) and (len(end_date) == 10) and (len(end_time) == 8):
             temporal = start_date + 'T' + start_time + 'Z' + ',' + end_date + 'T' + end_time + 'Z'
             status_code = 'OK'
             status_message = ''
@@ -549,9 +549,9 @@ def execute_request(username:str,password:str,request_url:str,destination_path:s
         status_message = f'execute_request() --> Excepcion: {e}'
         return status_code,status_message,None
 
-def check_execution_result(destination_folder:str,start_date:str,end_date:str,coverages:list) -> tuple[str,str,Optional[str]]:
+def check_execution_result(destination_folder:str,start_date:str,end_date:str) -> tuple[str,str]:
     '''
-    Se realiza el check de la cantidad de imagenes obtenidas con respecto a la cantidad teorica.
+    Se realiza el conteo de cantidad de dias que se indico procesar y la cantidad de imagenes obtenidas.
     
     ----------------------
     Parametros de Entrada:
@@ -559,39 +559,29 @@ def check_execution_result(destination_folder:str,start_date:str,end_date:str,co
         - detination_folder(str): Diccionario donde se guardaron las imagenes
         - start_date(str): Parametro --> Fecha de inicio
         - end_date(str): Parametro --> Fecha de fin
-        - coverages(list): Parametro --> Lista de productos
 
     ---------------------
     Parametros de Salida:
     ---------------------
         - status_code(str): Codigo de estado ['OK','NOK'].
         - status_message(str): Mensaje de estado.
-        - request_list(list): Listado de URL's a las cuales es necesario realizar el request.
+        - cantidad_dias(str): Cantida de dias que se indico procesar.
+        - cantidad_imagenes(str): Cantidad de imagenes obtenidas.
     '''
     try:
         start_date_inicio = date(int(start_date[0:4]),int(start_date[5:7]),int(start_date[8:]))
         start_date_fin = date(int(end_date[0:4]),int(end_date[5:7]),int(end_date[8:]))
         dias = ((start_date_fin - start_date_inicio).days) + 1 
 
-        cantidad_imagenes_teorica = dias * len(coverages)
-        cantidad_imagenes_real = len([name for name in os.listdir(destination_folder) if os.path.isfile(os.path.join(destination_folder, name))])
+        cantidad_dias = str(dias)
+        cantidad_imagenes = str(len([name for name in os.listdir(destination_folder) if os.path.isfile(os.path.join(destination_folder, name))]))
 
-        if cantidad_imagenes_teorica == cantidad_imagenes_real:
-            status_code = 'OK'
-            status_message = ''
-            return status_code,status_message,None
-        
-        elif cantidad_imagenes_teorica > cantidad_imagenes_real:
-            status_code = 'NOK'
-            status_message = 'check_execution_result() --> Error: La cantidad de imagenes que se obtuvieron ES MENOR que la cantidad teorica esperada'
-            return status_code,status_message,None
-        
-        else:
-            status_code = 'NOK'
-            status_message = 'check_execution_result() --> Error: La cantidad de imagenes que se obtuvieron ES MAYOR que la cantidad teorica esperada'
-            return status_code,status_message,None
+        status_code = 'OK'
+        status_message = ''
+
+        return status_code,status_message,cantidad_dias,cantidad_imagenes
         
     except Exception as e:
         status_code = 'NOK'
         status_message = f'check_execution_result() --> Exception: {e}'
-        return status_code,status_message,None
+        return status_code,status_message,None,None
