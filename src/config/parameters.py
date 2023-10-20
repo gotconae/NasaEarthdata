@@ -5,7 +5,7 @@
 # A1. Fechas --> [str]
 start_date = '2023-01-01' #Fecha de inicio en formato 'YYYY-MM-DD' (str)
 start_time = '00:00:00' #Hora de inicio en formato 'HH:mm:ss' (str)
-end_date = '2023-01-03' #Fecha de fin en formato 'YYYY-MM-DD' (str)
+end_date = '2023-01-02' #Fecha de fin en formato 'YYYY-MM-DD' (str)
 end_time = '00:00:00' #Hora de fin en formato 'HH:mm:ss' (str)
 
 # A2. Zona Geografica --> [str]
@@ -35,7 +35,7 @@ coverages = ['/Soil_Moisture_Retrieval_Data_AM/soil_moisture',
 projection = 'Geographic' 
 
 # A9. Cantidad de items a devolver en una respuesta --> [str]
-page_size = '100'
+page_size = '2000'
 
 ############################################################################################################
 ### B.CONFIGURACION DEL REQUEST - VALORES PREDEFINIDOS (NO MODIFICAR POR PARTE DEL USUARIO DEL PRODUCTO) ###
