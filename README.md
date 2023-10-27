@@ -113,11 +113,11 @@ El usuario de la funcionalidad tiene permitido configurar la informacion a desca
 | start_time             | Hora de Inicio del intervalo temporal                | STRING       | HH-mm-ss           | '00:00:00'                                         | SI                                                 |               |
 | end_date               | Fecha de Fin del intervalo temporal                  | STRING       | YYYY-MM-DD         | '2023-01-31'                                       | SI                                                 | (1)           |  
 | end_time               | Hora de Fin del intervalo temporal                   | STRING       | HH-mm-ss           | '00:00:00'                                         | SI                                                 | (1)           |
-| lower_left_longitude   | Longitud Inferior Izquierda                          | STRING       |                    | '-90'                                              | SI                                                 |               |
-| lower_left_latitude    | Latitud Inferior Izquierda                           | STRING       |                    | '-60'                                              | SI                                                 |               |
-| upper_right_longitude  | Longitud Superior derecha                            | STRING       |                    | '-30'                                              | SI                                                 |               |
-| upper_right_latitude   | Latitud Superior Derecha                             | STRING       |                    | '-60'                                              | SI                                                 |               |
-| bbox                   | Bounding Box                                         | STRING       |                    | '2023-01-01,00:00:00,2023-01-03,00:00:00'          | NO                                                 | (2)           |
+| left                   | Coordenada Izquierda                                 | STRING       |                    | '-90'                                              | SI                                                 |               |
+| bottom                 | Coordenada Inferior                                  | STRING       |                    | '-60'                                              | SI                                                 |               |
+| right                  | Coordenada Derecha                                   | STRING       |                    | '-30'                                              | SI                                                 |               |
+| top                    | Coordenada Superior                                  | STRING       |                    | '20'                                               | SI                                                 |               |
+| bbox                   | Bounding Box                                         | STRING       |                    | '-90,-60,-30,20'                                   | NO                                                 | (2)           |
 | base_url               | URL base de NSIDC                                    | STRING       |                    | 'https://n5eil02u.ecs.nsidc.org/egi/request'       | NO                                                 |               |
 | short_name             | Abreviatura del Producto NSIDC                       | STRING       |                    | 'SPL3SMP_E'                                        | SI                                                 | (3)           |
 | version                | Version del Producto NSIDC                           | STRING       |                    | '005'                                              | SI                                                 | (2)           |
@@ -134,7 +134,7 @@ El usuario de la funcionalidad tiene permitido configurar la informacion a desca
 
 (1) La configuracion requerida del request **NO PERMITE** dejar estas variables como un string vacio o especificar el mismo valor que start_date / start_time --> Es requerido que se especifique un rango temporal donde start_date y end_date tengan como minimo 1 dia de diferencia y con valores crecientes (end_date > start_date)
 
-(2) Esta variable es contruida utilizando las variables **start_date / start_time / end_date / end_time**, por lo tanto tener cuidado de **NO MODIFICARLA**.
+(2) Esta variable es contruida utilizando las variables definidas previamente **left / bottom / right / top**, por lo tanto tomar las precauciones necesarias para **NO MODIFICARLA**.
 
 (3) Para el caso de consulta de datos correspondientes a **SMAP** tomar como referencia de posibles valores lo especificado en **notebooks/NSIDC_data_products/NSIDC - SMAP Data Products.ipynb**.
 
