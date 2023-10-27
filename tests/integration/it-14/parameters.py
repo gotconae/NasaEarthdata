@@ -9,11 +9,11 @@ end_date = '2023-01-02' #Fecha de fin en formato 'YYYY-MM-DD' (str)
 end_time = '00:00:00' #Hora de fin en formato 'HH:mm:ss' (str)
 
 # A2. Zona Geografica --> [str]
-lower_left_longitude = '-90'
-lower_left_latitude = '-60'
-upper_right_longitude = '-30'
-upper_right_latitude = '20'
-bbox = lower_left_longitude + ',' + lower_left_latitude + ',' + upper_right_longitude + ',' + upper_right_latitude
+left = '-90'
+bottom = '-60'
+right = '-30'
+top = '20'
+bbox = left + ',' + bottom + ',' + right + ',' + top
 
 # A3. URL Base - National Snow & Ice Data Center (NSIDC) --> [str]
 base_url = 'https://n5eil02u.ecs.nsidc.org/egi/request'
