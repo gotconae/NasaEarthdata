@@ -4,20 +4,20 @@ import inspect
 import sys
 sys.path.append('../') #Esto permite acceder a modulos creados el mismo nivel de directorio que el actual
 
-from utils.modules import load_secrets
-from utils.modules import temporal_range
-from utils.modules import request_urls_list
-from utils.modules import create_root_folder
-from utils.modules import create_folder
-from utils.modules import delete_folder
-from utils.modules import dict_folders
-from utils.modules import create_logs_file
-from utils.modules import write_log_message
-from utils.modules import write_error_log_message
-from utils.modules import unzip
-from utils.modules import move_images
-from utils.modules import execute_request
-from utils.modules import check_execution_result
+from utils.download import load_secrets
+from utils.download import temporal_range
+from utils.download import request_urls_list
+from utils.download import create_root_folder
+from utils.download import create_folder
+from utils.download import delete_folder
+from utils.download import dict_folders
+from utils.download import create_logs_file
+from utils.download import write_log_message
+from utils.download import write_error_log_message
+from utils.download import unzip
+from utils.download import move_images
+from utils.download import execute_request
+from utils.download import check_execution_result
 from config.parameters import *
 import config.parameters
 
