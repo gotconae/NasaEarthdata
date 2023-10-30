@@ -75,8 +75,8 @@ El proyecto contiene los siguientes directorios:
 Dentro del directorio **src** se encontraran los siguientes directorios:
 
     - config --> Se encuentra el script para configuracion de parametros por parte del usuario necesarios para la ejecucion del programa.
-    - download --> Se encuentra el script download_nasaearthdata.py que contiene la logica principal del programa.
-    - utils --> Se encuentra el script modules.py que contiene los modulos necesarios para la ejecucion del programa.
+    - download --> Se encuentra el script download_nsidc.py que contiene la logica principal del programa.
+    - utils --> Se encuentra el script download.py que contiene los modulos necesarios para la ejecucion del programa.
 
 Sumado a los directorios tambien se encuentran los siguientes archivos:
 
